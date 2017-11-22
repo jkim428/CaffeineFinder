@@ -82,7 +82,7 @@ public class CaffeineListActivity extends AppCompatActivity implements OnMapRead
         // Move the map from Africa to our cameraUpdate
         mMap.moveCamera(cameraUpdate);
 
-        // Now, let's plot each Locaton from the list with a standard marker
+        // Now, let's plot each Location from the list with a standard marker
         for (Location location : allLocationsList)
         {
             LatLng caffeineLocation = new LatLng(location.getLatitude(), location.getLongitude());

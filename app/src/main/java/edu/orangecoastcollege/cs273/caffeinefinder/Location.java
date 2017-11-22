@@ -1,5 +1,8 @@
 package edu.orangecoastcollege.cs273.caffeinefinder;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * The <code>Location</code> class represents a place where one can get a caffeine fix, including
  * its name, address, phone number and latitude/longitude location.
@@ -7,7 +10,7 @@ package edu.orangecoastcollege.cs273.caffeinefinder;
  * @author Michael Paulding
  */
 
-public class Location {
+public class Location implements Parcelable {
     private long mId;
     private String mName;
     private String mAddress;
@@ -32,6 +35,19 @@ public class Location {
 
     public Location(String name, String address, String city, String state, String zipCode, String phone, double latitude, double longitude) {
         this(-1, name, address, city, state, zipCode, phone, latitude, longitude);
+    }
+
+    private Location(Parcel parcel)
+    {
+        mId = parcel.readLong();
+        mName = parcel.readString();
+        mAddress = parcel.readString();
+        mCity = parcel.readString();
+        mState = parcel.readString();
+        mZipCode = parcel.readString();
+        mPhone = parcel.readString();
+        mLatitude = parcel.readDouble();
+        mLongitude = parcel.readDouble();
     }
 
     public long getId() {
@@ -127,4 +143,34 @@ public class Location {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeLong(mId);
+        parcel.writeString(mName);
+        parcel.writeString(mAddress);
+        parcel.writeString(mCity);
+        parcel.writeString(mState);
+        parcel.writeString(mZipCode);
+        parcel.writeString(mPhone);
+        parcel.writeDouble(mLatitude);
+        parcel.writeDouble(mLongitude);
+    }
+
+    public static final Parcelable.Creator<Location> CREATOR = new Creator<Location>()
+    {
+        @Override
+        public Location createFromParcel(Parcel parcel) {
+            return new Location(parcel);
+        }
+
+        @Override
+        public Location[] newArray(int size) {
+            return new Location[size];
+        }
+    };
 }
